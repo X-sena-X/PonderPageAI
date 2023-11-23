@@ -27,7 +27,7 @@ const FileUpload = () => {
     });
 
     return (
-        <div className="rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+        <div className="w-[74%] lg:w-[100%] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
             <UploadDropzone
                 endpoint="pdfUploader"
                 onClientUploadComplete={(res) => {
@@ -89,10 +89,10 @@ const FileUpload = () => {
                 }}
                 appearance={{
                     container:
-                        "border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 flex justify-center items-center flex-col",
+                        " border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 flex justify-center items-center flex-col",
                     button: "ut-uploading:bg-black",
                 }}
-                className="ut-uploading:cursor-not-allowed  ut-label:text-lg ut-label:text-black ut-upload-icon:text-blue-500	 ut-allowed-content:text-black ut-allowed-content:text-base"
+                className="ut-uploading:cursor-not-allowed ut-button:w-[100%]  ut-label:text-base ut-label:lg:text-lg ut-label:text-black ut-upload-icon:text-blue-500  ut-allowed-content:text-black ut-allowed-content:text-sm ut-allowed-content:lg:text-base"
             />
         </div>
     );

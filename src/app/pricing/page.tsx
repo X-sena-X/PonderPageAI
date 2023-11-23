@@ -25,7 +25,7 @@ const qoutes: TypeQuotes = [
     ],
 
     [
-        "benefits included in started pack",
+        "benefits included in starter pack",
         "maximum pdf size of 24Mb",
         "GPT4 Turbo",
         "unlimiited queries per chat",
@@ -49,17 +49,19 @@ const page = (props: Props) => {
     };
 
     return (
-        <div className="w-screen h-screen items-center flex flex-col justify-center gap-y-20 bg-[conic-gradient(at_bottom,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900">
-            <div className="flex flex-col w-[35%] items-center gap-y-4">
-                <p className="flex text-4xl font-medium text-white">Pricing</p>
-                <p className="flex text-gray-400">
+        <div className="w-screen h-fit lg:h-screen items-center flex flex-col justify-center lg:gap-y-20 gap-y-10 py-10 bg-[conic-gradient(at_bottom,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 ">
+            <div className="flex flex-col lg:w-[40%] w-[90%] items-center gap-y-4">
+                <p className="flex text-2xl lg:text-4xl font-medium text-white">
+                    Pricing
+                </p>
+                <p className="flex text-sm lg:text-base text-gray-400 text-center">
                     whether you're just getting started with chatpdf or scaling
                     across multiple large documents to get answers . we've got
                     you covered.
                 </p>
             </div>
-            <div className="flex w-[55%] h-[50%] gap-x-3">
-                <Card className="w-1/2 rounded-2xl shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]">
+            <div className="flex flex-col lg:flex-row w-[85%] items-center lg:w-[55%] h-[55%] gap-y-3 lg:gap-x-3 ">
+                <Card className="w-[85%] lg:w-1/2 lg:h-[100%] rounded-2xl shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]">
                     <CardHeader>
                         <CardTitle>Starter</CardTitle>
                         <CardDescription>
@@ -75,14 +77,17 @@ const page = (props: Props) => {
                     </CardContent>
                     <CardFooter className="flex flex-col justify-items-start gap-y-1">
                         {qoutes[0].map((qoute, i) => (
-                            <span key={i} className="flex items-center gap-x-2">
+                            <span
+                                key={i}
+                                className="flex items-center gap-x-2 text-sm lg:text-base"
+                            >
                                 <Check className="w-4 h-4" />
                                 {qoute}
                             </span>
                         ))}
                     </CardFooter>
                 </Card>
-                <Card className="w-1/2 shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]">
+                <Card className="w-[85%] lg:w-1/2 lg:h-[100%] shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]">
                     <CardHeader>
                         <CardTitle>Pro</CardTitle>
                         <CardDescription>Card Description</CardDescription>
@@ -99,7 +104,10 @@ const page = (props: Props) => {
                     </CardContent>
                     <CardFooter className="flex flex-col justify-start justify-items-start gap-y-1">
                         {qoutes[1].map((qoute, i) => (
-                            <span key={i} className="flex items-center gap-x-2">
+                            <span
+                                key={i}
+                                className="flex items-center gap-x-2 text-sm lg:text-base"
+                            >
                                 <Check className="w-4 h-4" />
                                 {qoute}
                             </span>

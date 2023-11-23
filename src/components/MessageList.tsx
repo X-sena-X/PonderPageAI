@@ -11,7 +11,7 @@ type Props = {
 const MessageList = ({ messages, isLoading }: Props) => {
     if (isLoading)
         return (
-            <div className=" flex flex-col h-full w-full gap-3 px-4 ">
+            <div className=" flex flex-col h-sfull w-full gap-3 px-4 ">
                 <div className="flex justify-end pl-10">
                     <Skeleton className="w-44 h-8 rounded-md" />
                 </div>

@@ -136,28 +136,36 @@ export default async function Home() {
 
                 <div className="flex flex-row w-[80%] justify-evenly items-center  ">
                     <div className="w-[18%] lg:w-44 h-32 rounded-3xl ">
-                        <img
-                            src="/nextjs_logo.jpg"
-                            className="h-full w-full object-contain dark:invert"
-                        />
+                        <Link href="https://nextjs.org">
+                            <img
+                                src="/nextjs_logo.jpg"
+                                className="h-full w-full object-contain dark:invert"
+                            />
+                        </Link>
                     </div>
                     <div className="w-[18%] lg:w-44 h-[10%] lg:h-12 rounded-3xl">
-                        <img
-                            src="/vercel_logo.jpg"
-                            className="h-full w-full  object-fit dark:invert"
-                        />
+                        <Link href="https://vercel.com">
+                            <img
+                                src="/vercel_logo.jpg"
+                                className="h-full w-full  object-fit dark:invert"
+                            />
+                        </Link>
                     </div>
                     <div className="w-[18%] lg:w-24 h-[5%] lg:h-12 rounded-3xl">
-                        <img
-                            src="/clerk_img.jpg"
-                            className="h-full w-full  object-fit "
-                        />
+                        <Link href="https://clerk.com">
+                            <img
+                                src="/clerk_img.jpg"
+                                className="h-full w-full  object-fit "
+                            />
+                        </Link>
                     </div>
                     <div className="w-[18%] lg:w-32 h-[10%] lg:h-16 rounded-3xl">
-                        <img
-                            src="/stripe_logo.png"
-                            className="h-full w-full object-fit dark:invert"
-                        />
+                        <Link href="https://www.stripe.com">
+                            <img
+                                src="/stripe_logo.png"
+                                className="h-full w-full object-fit dark:invert"
+                            />
+                        </Link>
                     </div>
                 </div>
             </div>

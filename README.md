@@ -34,3 +34,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+1. obtain the pdf
+2. split and segment the pdf into multiple parts
+3. vectorize and embed individual documents
+4. store the vectors into pineconedb
+
+-- search -- 5. embed the query 6. query the pinconedb for similar vectors 7. extract out the metadata of the similar vectors 8. feed metadata into openai prompt

@@ -1,113 +1,151 @@
-import Image from 'next/image'
+import { Button } from "@/components/ui/button";
+import { UserButton, auth } from "@clerk/nextjs";
+import Image from "next/image";
+import Link from "next/link";
+import { LogIn } from "lucide-react";
+import FileUpload from "@/components/FileUpload";
+import ThemeToggler from "@/components/ThemeToggler";
+import { User } from "lucide-react";
+import { Features } from "@/components/Features";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRightToLine } from "lucide-react";
+import { db } from "@/lib/db";
+import { chats } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
+import { ChevronsRight } from "lucide-react";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+export default async function Home() {
+    const { userId } = await auth();
+    const isAuth = !!userId;
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    let firstChat;
+    if (userId) {
+        firstChat = await db
+            .select()
+            .from(chats)
+            .where(eq(chats.userId, userId));
+    }
+    if (firstChat) firstChat = firstChat[0];
+    return (
+        <main className="flex flex-col min-h-screen dark:bg-black bg-white dark:text-white overflow-hidden">
+            <div className="fixed top-0 flex justify-end gap-x-8 items-center py-1 w-full bg-opacity-80 bg-slate-50 dark:bg-gray-900 z-30  px-10">
+                <Link href="/pricing">
+                    <p className=" text-base hover:text-violet-600">Pricing</p>
+                </Link>
+                <ThemeToggler />
+                {isAuth ? (
+                    <UserButton afterSignOutUrl="/" />
+                ) : (
+                    <Link href="/sign-in">
+                        <div className="border-gray-500 border-2 w-8 h-8 rounded-full items-center justify-center flex">
+                            <User className="text-gray-400" />
+                        </div>
+                    </Link>
+                )}
+            </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+            <div className="w-screen h-fit px-8 flex lg:flex-row flex-col gap-x-8">
+                <div className="flex items-center ">
+                    <div className="flex flex-col gap-y-4">
+                        <div className="flex flex-col gap-4">
+                            <Badge className="w-fit flex gap-x-2 bg-black text-white border-2 border-gray-400 py-2 px-4 hover:bg-black shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]">
+                                Join - Early access
+                                <ArrowRightToLine className="w-4 h-4 " />
+                            </Badge>
+                            <h1 className="mr-3 text-5xl font-semibold">
+                                Chat with PDF
+                            </h1>
+                        </div>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+                        <p className="max-w-xl mt-1 text-lg text-slate-600">
+                            Join millions of students, researchers and
+                            professionals to instantly answer questions and
+                            understand research with AI
+                        </p>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+                        <div className="w-full mt-4">
+                            {isAuth ? (
+                                <div className="flex flex-col gap-y-4">
+                                    <div className="flex flex-row gap-x-4">
+                                        <Button className=" hover:bg-gray-700 dark:hover:bg-sky-600 hover:text-white  rounded-2xl shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+                                            {" "}
+                                            View Demo
+                                        </Button>
+                                        <Link href={`/chat/${firstChat?.id}`}>
+                                            <Button className=" hover:bg-gray-700 dark:hover:bg-sky-600 hover:text-white  rounded-2xl shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+                                                Go to Chats
+                                                <ChevronsRight className="ml-2 w-4 h-4" />
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                    <FileUpload />
+                                </div>
+                            ) : (
+                                <div className="flex flex-row gap-x-2">
+                                    <Link href="/sign-in">
+                                        <Button className=" hover:bg-gray-700 dark:hover:bg-sky-600 hover:text-white  rounded-2xl">
+                                            Login to get Started{" "}
+                                            <LogIn className="w-4 h-4 ml-2" />
+                                        </Button>
+                                    </Link>
+                                    <Button className=" hover:bg-gray-700 dark:hover:bg-sky-600 hover:text-white  rounded-2xl">
+                                        {" "}
+                                        View Demo
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div className="flex items-center lg:w-1/2 w-full h-screen px-12 py-2">
+                    <div className="w-[620px] h-[350px] shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)]">
+                        <Image
+                            src="/chatpdfDemo.png"
+                            alt="demo_image"
+                            height={500}
+                            width={620}
+                            priority={true}
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="w-screen h-fit items-center flex justify-center py-20">
+                <div className=" w-1/2 h-auto">
+                    <Features />
+                </div>
+            </div>
+            <div className="w-screen h-fit flex flex-col items-center lg:mt-20 gap-y-10 mb-20">
+                <Badge className="w-fit flex gap-x-2 dark:bg-black bg-gray-50 hover:bg-gray-50 hover:dark:bg-black text-slate-800 dark:text-white border-2 border-gray-400 py-2 px-4 text-base dark:shadow-[inset_-12px_-8px_40px_#46464620] shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+                    ChatPdf is built with these tools..
+                </Badge>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+                <div className="flex flex-row w-[80%] justify-evenly items-center  ">
+                    <div className="w-44 h-32 rounded-3xl ">
+                        <img
+                            src="/nextjs_logo.jpg"
+                            className="h-full w-full object-contain dark:invert"
+                        />
+                    </div>
+                    <div className="w-44 h-12 rounded-3xl">
+                        <img
+                            src="/vercel_logo.jpg"
+                            className="h-full w-full  object-fit dark:invert"
+                        />
+                    </div>
+                    <div className="w-24 h-12 rounded-3xl">
+                        <img
+                            src="/clerk_img.jpg"
+                            className="h-full w-full  object-fit "
+                        />
+                    </div>
+                    <div className="w-32 h-16 rounded-3xl">
+                        <img
+                            src="/stripe_logo.png"
+                            className="h-full w-full object-fit dark:invert"
+                        />
+                    </div>
+                </div>
+            </div>
+        </main>
+    );
 }

@@ -1,7 +1,7 @@
 "use client";
 import { DrizzleChat } from "@/lib/db/schema";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "./ui/button";
 import { PlusIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,19 +18,9 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import axios from "axios";
-
-import { useRouter } from "next/router";
-
 type Props = {
     chats: DrizzleChat[];
     chatId: number;
-};
-
-type ChatType = {
-    id: number;
-    user_id: string;
-    file_key: string;
-    pinecone_id: string;
 };
 
 const ChatSideBar = ({ chats, chatId }: Props) => {

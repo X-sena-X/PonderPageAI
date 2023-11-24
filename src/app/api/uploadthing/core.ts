@@ -16,7 +16,7 @@ const middleware = async () => {
 export const uploadThingsFileRouter = {
     pdfUploader: f({ pdf: { maxFileSize: "8MB", maxFileCount: 1 } })
         .middleware(middleware)
-        .onUploadError(async (response) => {})
+
         .onUploadComplete(async ({ metadata, file }) => {
             return { fileUrl: file.url, fileKey: file.key };
         }),

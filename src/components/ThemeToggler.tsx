@@ -6,7 +6,7 @@ export default function ThemeToggler() {
     const handleTheme = () => {
         if (theme === "dark") setTheme("light");
         else setTheme("dark");
-        console.log(theme);
+        //console.log(theme);
     };
     return (
         <div className="">

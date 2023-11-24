@@ -4,10 +4,10 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 const f = createUploadthing();
 
 const middleware = async () => {
-    //const userId = await auth();
-    /*if (!userId) throw new Error("Not Authorized");
+    const userId = await auth();
+    if (!userId) throw new Error("Not Authorized");
     if (!process.env.OPENAI_API_KEY)
-        throw new Error("OpenAI API Key is required");*/
+        throw new Error("OpenAI API Key is required");
     return { userId: 1 };
 };
 

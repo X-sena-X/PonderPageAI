@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Message } from "ai/react";
 import React from "react";
 import { Skeleton } from "./ui/skeleton";
-
+import { Feather } from "lucide-react";
 type Props = {
     messages: Message[];
     isLoading: boolean;
@@ -28,10 +28,63 @@ const MessageList = ({ messages, isLoading }: Props) => {
         );
     if (!messages) return <></>;
     return (
-        <div className="flex flex-col gap-3 px-4">
+        <div className="flex flex-col">
             {messages.map((message) => {
-                return (
-                    <div
+                if (message.role === "user")
+                    return (
+                        <div key={message.id} className={cn("chat chat-end")}>
+                            <div className="chat-image avatar">
+                                <div className="w-8 rounded-full bg-black text-white items-center justify-center flex">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        className="lucide lucide-user-round w-6 h-6"
+                                    >
+                                        <circle cx="12" cy="8" r="5" />
+                                        <path d="M20 21a8 8 0 0 0-16 0" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div
+                                className={cn(
+                                    "chat-bubble chat-bubble-accent text-sm"
+                                )}
+                            >
+                                {message.content}
+                            </div>
+                        </div>
+                    );
+                else {
+                    return (
+                        <div key={message.id} className={cn("chat chat-start")}>
+                            <div className="chat-image avatar">
+                                <div className=" w-8 rounded-full bg-black text-white ">
+                                    <Feather className="w-8 h-8" />
+                                </div>
+                            </div>
+                            <div
+                                className={cn(
+                                    "chat-bubble  chat-bubble-primary text-sm"
+                                )}
+                            >
+                                {message.content}
+                            </div>
+                        </div>
+                    );
+                }
+            })}
+        </div>
+    );
+};
+
+export default MessageList;
+/**
+ * <div
                         key={message.id}
                         className={cn("flex", {
                             "justify-end pl-10": message.role === "user",
@@ -52,10 +105,4 @@ const MessageList = ({ messages, isLoading }: Props) => {
                             <p>{message.content}</p>
                         </div>
                     </div>
-                );
-            })}
-        </div>
-    );
-};
-
-export default MessageList;
+ */

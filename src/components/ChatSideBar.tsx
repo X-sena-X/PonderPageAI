@@ -18,8 +18,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import axios from "axios";
-import Error from "next/error";
-import { headers } from "next/headers";
+
 import { useRouter } from "next/router";
 
 type Props = {
@@ -35,9 +34,6 @@ type ChatType = {
 };
 
 const ChatSideBar = ({ chats, chatId }: Props) => {
-    const [currentChat, setCurrentChat] = useState<ChatType>();
-    const router = useRouter();
-
     const handleClickDelete = async ({
         id,
         user_id,
@@ -66,7 +62,6 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
                 pinecone_id,
             });
             console.log("success: Deleted the chat");
-            router.push("/");
         } catch (error) {
             console.log(error);
         }

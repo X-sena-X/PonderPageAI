@@ -15,9 +15,7 @@ export const { GET, POST } = createNextRouteHandler({
 export async function DELETE(req: Request) {
     const { fileKey } = await req.json();
     console.log(fileKey);
-    const utapi = new UTApi({
-        apiKey: process.env.UPLOADTHING_SECRET,
-    });
+    const utapi = new UTApi();
     try {
         await utapi.deleteFiles(fileKey);
         return NextResponse.json({ message: "ok" }, { status: 200 });

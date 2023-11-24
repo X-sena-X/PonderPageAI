@@ -18,9 +18,6 @@ export const uploadThingsFileRouter = {
         .middleware(middleware)
         .onUploadError(async (response) => {})
         .onUploadComplete(async ({ metadata, file }) => {
-            //console.log("Upload complete for userId:", metadata.userId);
-
-            //console.log("file url", file.url);
             return { fileUrl: file.url, fileKey: file.key };
         }),
 } satisfies FileRouter;

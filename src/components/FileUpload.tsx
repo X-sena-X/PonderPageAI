@@ -119,7 +119,8 @@ const FileUpload = () => {
                         });
                     }
 
-                    return toast({
+                    return (
+                        /*toast({
                         variant: "destructive",
                         title: "Uh oh! Something went wrong.",
                         description: error.message,
@@ -128,7 +129,9 @@ const FileUpload = () => {
                                 Try again
                             </ToastAction>
                         ),
-                    });
+                    })*/
+                        console.log(error)
+                    );
                 }}
                 onUploadBegin={() => {
                     setIsLoading(true);

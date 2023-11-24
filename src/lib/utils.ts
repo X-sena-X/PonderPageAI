@@ -1,9 +1,5 @@
-import { auth } from "@clerk/nextjs";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { db } from "./db";
-import { userSubscriptions } from "./db/schema";
-import { eq } from "drizzle-orm";
 import { Metadata } from "next";
 import { Author } from "next/dist/lib/metadata/types/metadata-types";
 
@@ -16,23 +12,33 @@ export function convertToAscii(inputString: string) {
 }
 
 export function constructMetadata({
-    title = "",
-    description = "",
-    applicationName = "",
-    keywords = ["Next.js", "React", "JavaScript"],
-    authors = { name: "senaAbhishek", url: "www.senaabhishek.com" },
-
+    title = "PonderPageAI",
+    description = "Transforming document into an elixir of understanding.",
+    applicationName = "PonderPageAI",
+    keywords = [
+        "AI Reading Comprehension",
+        "Document Understanding",
+        "PDF Question Answering",
+        "Smart Document Analysis",
+        "Text Interpretation AI",
+        "Educational AI Tool",
+        "Content Understanding",
+        "Book Summarization AI",
+        "Student Assistance AI",
+        "PDF Study Aid",
+    ],
+    authors = [{ name: "senaAbhishek", url: "https://www.senaabhishek.com" }],
     image = "/thumbnail.png",
-    icons = "/favicon.ico",
+    icons = ["/favicon.ico"],
     noIndex = false,
 }: {
     title?: string;
     description?: string;
     applicationName?: string;
     keywords?: Array<string>;
-    authors?: Author;
+    authors?: Array<Author>;
     image?: string;
-    icons?: string;
+    icons?: Array<string>;
     noIndex?: boolean;
 } = {}): Metadata {
     return {
@@ -55,10 +61,10 @@ export function constructMetadata({
             title,
             description,
             images: [image],
-            creator: "@sena_abhishek",
+            creator: "@sena_Abhishek",
         },
         icons,
-        metadataBase: new URL(""),
+        metadataBase: new URL("https://ponder-page-ai.vercel.app/"),
         themeColor: "#FFF",
         ...(noIndex && {
             robots: {

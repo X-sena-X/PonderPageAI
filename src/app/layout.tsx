@@ -9,12 +9,10 @@ import { uploadThingsFileRouter } from "../app/api/uploadthing/core";
 import QueryProviders from "../components/Providers";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/themeProvider";
+import { constructMetadata } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-    title: "ChatPdf",
-    description: "ask questions to your pdf",
-};
+export const metadata: Metadata = constructMetadata();
 
 export default function RootLayout({
     children,

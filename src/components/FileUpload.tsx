@@ -112,15 +112,14 @@ const FileUpload = () => {
                             title: "Contact the Administrator",
                             description: "Missing OpenAI API Key",
                             action: (
-                                <ToastAction altText="Try again">
-                                    Try again
+                                <ToastAction altText="contact">
+                                    Mail
                                 </ToastAction>
                             ),
                         });
                     }
 
-                    return (
-                        /*toast({
+                    return toast({
                         variant: "destructive",
                         title: "Uh oh! Something went wrong.",
                         description: error.message,
@@ -129,9 +128,7 @@ const FileUpload = () => {
                                 Try again
                             </ToastAction>
                         ),
-                    })*/
-                        console.log(error)
-                    );
+                    });
                 }}
                 onUploadBegin={() => {
                     setIsLoading(true);

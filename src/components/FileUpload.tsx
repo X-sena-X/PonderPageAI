@@ -6,33 +6,44 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const FileUpload = () => {
     const { toast } = useToast();
+    const [isLoading, setIsLoading] = React.useState(true);
     const router = useRouter();
     const { mutate } = useMutation({
         mutationFn: async ({
             file_url,
             file_name,
+            file_key,
         }: {
             file_url: string;
             file_name: string;
+            file_key: string;
         }) => {
             const response = await axios.post("/api/create-chat", {
                 file_url,
                 file_name,
+                file_key,
             });
+
             return response.data;
         },
     });
 
     return (
-        <div className="w-[74%] lg:w-[100%] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+        <div
+            className={cn(
+                "w-[74%] lg:w-[100%] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+            )}
+        >
             <UploadDropzone
                 endpoint="pdfUploader"
                 onClientUploadComplete={(res) => {
                     const file_name = res[0].name;
                     const file_url = res[0].serverData.fileUrl;
+                    const file_key = res[0].serverData.fileKey;
                     if (!file_name || !file_url)
                         return toast({
                             variant: "destructive",
@@ -45,18 +56,39 @@ const FileUpload = () => {
                                 </ToastAction>
                             ),
                         });
-                    console.log({ fileName: file_name, fileUrl: file_url });
+
+                    toast({
+                        title: "File uploaded",
+                        description:
+                            "File uploaded successfully redirecting...",
+                    });
+
+                    console.log({
+                        fileName: file_name,
+                        fileUrl: file_url,
+                        file_key: file_key,
+                    });
                     mutate(
-                        { file_url, file_name },
+                        { file_url, file_name, file_key },
                         {
                             onSuccess: ({ chat_id }) => {
+                                setIsLoading(false);
                                 toast({
                                     title: "sucess",
-                                    description: "File uploaded successfully",
+                                    description: "Now you can ask questions.",
+                                    action: (
+                                        <ToastAction
+                                            altText="Goto back"
+                                            onClick={() => router.push("/")}
+                                        >
+                                            Go back
+                                        </ToastAction>
+                                    ),
                                 });
                                 router.push(`/chat/${chat_id}`);
                             },
-                            onError: (err) => {
+                            onError: (error) => {
+                                setIsLoading(false);
                                 return toast({
                                     variant: "destructive",
                                     title: "Uh oh! Something went wrong.",
@@ -73,6 +105,20 @@ const FileUpload = () => {
                     );
                 }}
                 onUploadError={(error: Error) => {
+                    console.log(error);
+                    if (error.message === "Failed to run middleware.") {
+                        return toast({
+                            variant: "destructive",
+                            title: "Contact the Administrator",
+                            description: "Missing OpenAI API Key",
+                            action: (
+                                <ToastAction altText="Try again">
+                                    Try again
+                                </ToastAction>
+                            ),
+                        });
+                    }
+
                     return toast({
                         variant: "destructive",
                         title: "Uh oh! Something went wrong.",
@@ -85,14 +131,23 @@ const FileUpload = () => {
                     });
                 }}
                 onUploadBegin={() => {
-                    console.log("upload begin");
+                    setIsLoading(true);
+                    toast({
+                        title: "sucess",
+                        description: "Your Pdf is getting uploaded.",
+                    });
                 }}
                 appearance={{
                     container:
                         " border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 flex justify-center items-center flex-col",
                     button: "ut-uploading:bg-black",
                 }}
-                className="ut-uploading:cursor-not-allowed ut-button:w-[100%]  ut-label:text-base ut-label:lg:text-lg ut-label:text-black ut-upload-icon:text-blue-500  ut-allowed-content:text-black ut-allowed-content:text-sm ut-allowed-content:lg:text-base"
+                className={cn(
+                    {
+                        "cursor-progress": isLoading,
+                    } +
+                        "ut-uploading:cursor-not-allowed ut-uploading:ut-button:disabled ut-uploading:disabled ut-button:w-[100%]  ut-label:text-base ut-label:lg:text-lg ut-label:text-black ut-upload-icon:text-blue-500  ut-allowed-content:text-black ut-allowed-content:text-sm ut-allowed-content:lg:text-base"
+                )}
             />
         </div>
     );

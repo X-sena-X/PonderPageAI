@@ -80,9 +80,10 @@ export async function POST(req: Request, res: Response) {
         return NextResponse.json({ error: "unauthorized" }, { status: 401 });
     try {
         const body = await req.json();
-        const { file_name, file_url } = body;
+        const { file_name, file_url, file_key } = body;
         console.log(`fileName: ${file_name}\nfileURL:  ${file_url}`);
         const pincone_id = await loadPdfToPinecone(file_url);
+
         const chat_id = await db
             .insert(chats)
             .values({
@@ -90,6 +91,7 @@ export async function POST(req: Request, res: Response) {
                 pdfname: file_name,
                 pdf_url: file_url,
                 pinconeId: pincone_id,
+                fileKey: file_key,
             })
             .returning({
                 insertedId: chats.id,

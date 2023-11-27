@@ -129,7 +129,7 @@ export default async function Home() {
                     PonderPageAI Versatility
                 </Badge>
             </div>
-            <div className="w-screen h-fit flex flex-col items-center lg:mt-20 gap-y-10 mb-20 py-10">
+            <div className="w-screen h-fit flex flex-col items-center lg:mt-20 gap-y-10 mb-14 pt-10">
                 <Badge className="w-fit flex gap-x-2 dark:bg-black  bg-gray-50 hover:bg-gray-50 hover:dark:bg-black text-slate-800 dark:text-white border-2 border-gray-400 py-2 px-4  text-xs lg:text-base dark:shadow-[inset_-12px_-8px_40px_#46464620] shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]">
                     PonderPageAI is built with these tools..
                 </Badge>
@@ -168,6 +168,15 @@ export default async function Home() {
                         </Link>
                     </div>
                 </div>
+            </div>
+            <div className="w-screen items-center text-center pb-2 text-sm lg:text-base">
+                <p>© 2023 PonderPageAI. All rights reserved.</p>
+                <p>
+                    Crafted with love by{" "}
+                    <Link href="www.senaabhisehk.com" className="text-cyan-400">
+                        Sena✨
+                    </Link>
+                </p>
             </div>
         </main>
     );

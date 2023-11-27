@@ -35,8 +35,9 @@ const qoutes: TypeQuotes = [
 
 type Props = {};
 
-const page = (props: Props) => {
+const page = async (props: Props) => {
     const router = useRouter();
+
     const handlePayment = async () => {
         try {
             const response = await axios.get("/api/stripe");
